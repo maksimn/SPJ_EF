@@ -2,10 +2,10 @@
 using System.Data.Entity;
 
 namespace EF.SupplyData {
-    class SupplyDbContext : DbContext {
-        DbSet<Supply> Supplies { get; set; }
-        DbSet<Project> Projects { get; set; }
-        DbSet<Part> Parts { get; set; }
-        DbSet<Shipper> Shippers { get; set; }
+    public class SupplyDbContext : DbContext {
+        public DbSet<Supply> Supplies { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Part> Parts { get; set; }
+        public DbSet<Shipper> Shippers { get; set; }
     }
 }

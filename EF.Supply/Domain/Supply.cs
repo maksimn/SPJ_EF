@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace EF.SupplyData.Domain {
-    class Supply {
+    public class Supply {
         public int Id { get; set; }
         [Required]
         public Shipper Shipper { get; set; }
