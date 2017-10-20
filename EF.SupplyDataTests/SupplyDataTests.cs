@@ -1,6 +1,7 @@
 ﻿using EF.SupplyData;
 using EF.SupplyData.Domain;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace EF.SupplyDataTests {
@@ -10,6 +11,7 @@ namespace EF.SupplyDataTests {
 
         [OneTimeSetUp]
         public void GlobalSetup() {
+            GlobalTeardown();
             using (supplyDbContext = new SupplyDbContext()) {
                 DbSet<Shipper> shippers = supplyDbContext.Shippers;
                 Shipper shipper1 = new Shipper() { Name = "Smith", Status = 20, City = "London" };
@@ -84,16 +86,32 @@ namespace EF.SupplyDataTests {
                                            DELETE FROM [dbo].Parts; 
                                            DELETE FROM [dbo].Supplies; 
                                            DELETE FROM [dbo].Projects;";
-               supplyDbContext.Database.ExecuteSqlCommand(deleteAllTables);
+                supplyDbContext.Database.ExecuteSqlCommand(deleteAllTables);
             }
         }
     }
 
     [TestFixture]
     class SupplyDataTests {
+        SupplyStore store;
+
+        [SetUp]
+        public void SetUp() {
+            store = new SupplyStore();
+        }
+
         [Test]
-        public void SomeTest() {
-            Assert.AreEqual(1, 2);
+        public void GetProjects_Test() {
+            List<Project> projects = store.GetProjects();
+
+            Assert.AreEqual(7, projects.Count);
+        }
+
+        [Test]
+        public void GetProjectsLinq_Test() {
+            List<Project> projects = store.GetProjectsLinq();
+
+            Assert.AreEqual(7, projects.Count);
         }
     }
 }

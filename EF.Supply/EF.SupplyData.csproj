@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SupplyDbContext.cs" />
+    <Compile Include="SupplyStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
