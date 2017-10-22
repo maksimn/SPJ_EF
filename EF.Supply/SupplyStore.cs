@@ -68,6 +68,30 @@ namespace EF.SupplyData {
             }
         }
 
+        public List<Tuple<int, int, int>> GetShipperIdPartIdProjectIdWhereTheyAreInTheSameCityLinq() {
+            using (SupplyDbContext context = new SupplyDbContext()) {
+                var query = from supply in context.Supplies
+                            where supply.Shipper.City == supply.Part.City && supply.Shipper.City == supply.Project.City
+                            select Tuple.Create(supply.Shipper.Id, supply.Part.Id, supply.Project.Id);
+
+                return query.ToList();
+            }
+        }
+
+        public List<Part> GetPartsWhichShipperFromCityLinq(string city) {
+            using (SupplyDbContext context = new SupplyDbContext()) {
+                var partsWithDuplicates = from supply in context.Supplies
+                            where supply.Shipper.City == city
+                            select supply.Part;
+                
+                var parts = from part in partsWithDuplicates
+                                  group part by part.Id into distinctParts
+                                  select distinctParts.FirstOrDefault();
+
+                return parts.ToList();
+            }
+        }
+
         // Auxilliary for tests
         public Project GetProjectWithName(string projectName) {
             using (SupplyDbContext context = new SupplyDbContext()) {

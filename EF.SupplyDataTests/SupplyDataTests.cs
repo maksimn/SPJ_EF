@@ -27,7 +27,7 @@ public class TestsSetupClass {
             Part part3 = new Part() { Name = "Screw", Color = "Blue", Weight = 17.0, City = "Oslo" };
             Part part4 = new Part() { Name = "Screw", Color = "Red", Weight = 14.0, City = "London" };
             Part part5 = new Part() { Name = "Cam", Color = "Blue", Weight = 12.0, City = "Paris" };
-            Part part6 = new Part() { Name = "Cog", Color = "Rad", Weight = 19.0, City = "London" };
+            Part part6 = new Part() { Name = "Cog", Color = "Red", Weight = 19.0, City = "London" };
             Part[] partArray = new Part[] { part1, part2, part3, part4, part5, part6 };
 
             DbSet<Project> projects = supplyDbContext.Projects;
@@ -141,5 +141,12 @@ class SupplyDataTests {
         List<int> shipperIds = store.GetShipperIdsForProjectIdLinq(project.Id);
 
         Assert.AreEqual(3, shipperIds.Count);
+    }
+
+    [Test]
+    public void GetPartsWhichShipperFromCityLinq_Test() {
+        List<Part> parts = store.GetPartsWhichShipperFromCityLinq("London");
+
+        Assert.AreEqual(2, parts.Count);
     }
 }
